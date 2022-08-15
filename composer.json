@@ -1,0 +1,34 @@
+{
+    "name": "be_key_inc/base_auth",
+    "type": "library",
+    "description": "Base auth library.",
+    "keywords": ["auth", "library", "BeKey"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "firebase/php-jwt": "^5.2"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "BeKey\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+    },
+    "extra": {
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
