@@ -11,13 +11,13 @@ class JwtTokenDto
      * @param string $tokenType
      * @param int $expiresIn
      * @param string $accessToken
-     * @param string $refreshToken
+     * @param string|null $refreshToken
      */
     public function __construct(
         public string $tokenType,
         public int $expiresIn,
         public string $accessToken,
-        public string $refreshToken
+        public ?string $refreshToken
     ) {
     }
 }

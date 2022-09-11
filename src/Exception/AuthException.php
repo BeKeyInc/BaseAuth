@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeKey\Auth\Exception;
 
 class AuthException extends \Exception

@@ -13,7 +13,7 @@ interface JwtServiceInterface
 {
     /**
      * @param IdentityInterface $user
-     * @param string $hash
+     * @param string|null $hash
      * @param string $sub
      * @param int|null $accessLifetime
      * @param bool $needRefreshToken
@@ -22,7 +22,7 @@ interface JwtServiceInterface
      */
     public function generateTokenToUser(
         IdentityInterface $user,
-        string $hash,
+        ?string $hash,
         string $sub,
         ?int $accessLifetime = null,
         bool $needRefreshToken = true,

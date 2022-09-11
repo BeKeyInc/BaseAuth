@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BeKey\Auth\Service;
 
 use BeKey\Auth\Contract\IdentityInterface;
@@ -72,7 +74,7 @@ class JwtService implements JwtServiceInterface
 
     /**
      * @param IdentityInterface $user
-     * @param string $hash
+     * @param string|null $hash
      * @param string $sub
      * @param int|null $accessLifetime
      * @param bool $needRefreshToken
@@ -81,7 +83,7 @@ class JwtService implements JwtServiceInterface
      */
     public function generateTokenToUser(
         IdentityInterface $user,
-        string $hash,
+        ?string $hash,
         string $sub,
         ?int $accessLifetime = null,
         bool $needRefreshToken = true,
