@@ -2,6 +2,7 @@
 
 namespace BeKey\Auth\Contract;
 
+use BeKey\Auth\Dto\JwtObject;
 use BeKey\Auth\Dto\JwtTokenDto;
 use BeKey\Auth\Enum\JwtSubEnum;
 
@@ -29,9 +30,9 @@ interface AuthServiceInterface
 
     /**
      * @param string $token
-     * @param string $sub
+     * @param string|null $sub
      */
-    public function authByToken(string $token, string $sub = JwtSubEnum::SUB_BASE_AUTH): void;
+    public function authByToken(string $token, ?string $sub = JwtSubEnum::SUB_BASE_AUTH): JwtObject;
 
     public function logout(): void;
 

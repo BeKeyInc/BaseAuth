@@ -7,6 +7,7 @@ namespace BeKey\Auth\Service;
 use BeKey\Auth\Contract\AuthServiceInterface;
 use BeKey\Auth\Contract\IdentityInterface;
 use BeKey\Auth\Contract\JwtServiceInterface;
+use BeKey\Auth\Dto\JwtObject;
 use BeKey\Auth\Dto\JwtTokenDto;
 use BeKey\Auth\Enum\AuthTypeEnum;
 use BeKey\Auth\Enum\ExceptionCodesEnum;
@@ -81,10 +82,10 @@ abstract class BaseAuthService implements AuthServiceInterface
 
     /**
      * @param string $token
-     * @param string $sub
+     * @param string|null $sub
      * @throws AuthException
      */
-    public function authByToken(string $token, string $sub = JwtSubEnum::SUB_BASE_AUTH): void
+    public function authByToken(string $token, ?string $sub = JwtSubEnum::SUB_BASE_AUTH): JwtObject
     {
         if (!$token) {
             throw new AuthException(ExceptionCodesEnum::AUTH_TOKEN_NOT_SET, 'Wrong auth token');
@@ -101,7 +102,7 @@ abstract class BaseAuthService implements AuthServiceInterface
         if (empty($decodeToken->iss)) {
             throw new AuthException(ExceptionCodesEnum::AUTH_TOKEN_ERROR_ISS, 'Wrong auth token');
         }
-        if ($decodeToken->sub !== $sub) {
+        if ($sub !== null && $decodeToken->sub !== $sub) {
             throw new AuthException(ExceptionCodesEnum::AUTH_TOKEN_ERROR_SUB, 'Wrong auth token');
         }
 
@@ -112,6 +113,8 @@ abstract class BaseAuthService implements AuthServiceInterface
         }
 
         $this->auth($identity);
+
+        return $decodeToken;
     }
 
     public function logout(): void
