@@ -51,6 +51,15 @@ abstract class BaseAuthService implements AuthServiceInterface
             throw new AuthException(ExceptionCodesEnum::NOT_FIND_VALID_IDENTITY, 'Wrong credentials');
         }
 
+        return $this->loginUser($identity);
+    }
+
+    /**
+     * @param IdentityInterface $identity
+     * @return JwtTokenDto
+     */
+    public function loginUser(IdentityInterface $identity): JwtTokenDto
+    {
         $identity = $this->prepareIdentityAfterLogin($identity);
         $this->auth($identity);
 

@@ -16,6 +16,12 @@ interface AuthServiceInterface
     public function login(string $type, string $identifier, ?string $password): JwtTokenDto;
 
     /**
+     * @param IdentityInterface $identity
+     * @return JwtTokenDto
+     */
+    public function loginUser(IdentityInterface $identity): JwtTokenDto;
+
+    /**
      * @param string $token
      * @return JwtTokenDto
      */
