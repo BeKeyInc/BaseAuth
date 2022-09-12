@@ -22,7 +22,7 @@ abstract class BaseAuthService implements AuthServiceInterface
     abstract protected function getIdentityByIdentifier(?string $identifier, ?string $iss): IdentityInterface;
     abstract protected function codeAuth(string $identifier): ?IdentityInterface;
     abstract protected function prepareIdentityAfterLogin(IdentityInterface $identity): IdentityInterface;
-    abstract protected function changeHash(IdentityInterface $identity): void;
+    abstract protected function changeHash(IdentityInterface $identity): IdentityInterface;
 
     /**
      * BaseAuthService constructor.
@@ -65,6 +65,19 @@ abstract class BaseAuthService implements AuthServiceInterface
         $this->auth($identity);
 
         return $this->jwtService->generateTokenToUser($identity, $identity->getHash(), JwtSubEnum::SUB_BASE_AUTH);
+    }
+
+    public function getForgotPassToken(IdentityInterface $identity): JwtTokenDto
+    {
+        $identity = $this->changeHash($identity);
+
+        return $this->jwtService->generateTokenToUser(
+            $identity,
+            $identity->getHash(),
+            JwtSubEnum::SUB_FORGOT_PASSWORD_AUTH,
+            (int)env('FORGOT_PASSWORD_TOKEN_LIFETIME_IN_MINUTE', 120),
+            false
+        );
     }
 
     /**
