@@ -1,26 +1,46 @@
 <?php
 
-namespace BeKey\Contract;
+namespace BeKey\Auth\Contract;
 
-
+use BeKey\Auth\Dto\JwtObject;
+use BeKey\Auth\Dto\JwtTokenDto;
+use BeKey\Auth\Enum\JwtSubEnum;
 
 interface AuthServiceInterface
 {
-    const TYPE_PASSWORD_LOGIN = 'password';
-    const TYPE_CODE_LOGIN = 'code';
+    /**
+     * @param string $type
+     * @param string $identifier
+     * @param string|null $password
+     * @return JwtTokenDto
+     */
+    public function login(string $type, string $identifier, ?string $password): JwtTokenDto;
 
     /**
-     * @param string $identifier
-     * @param string $password
-     * @return IdentityInterface
+     * @param IdentityInterface $identity
+     * @return JwtTokenDto
      */
-    public function passwordAuth(string $identifier, string $password): ?IdentityInterface;
+    public function loginUser(IdentityInterface $identity): JwtTokenDto;
 
     /**
-     * @param string $identifier
-     * @return IdentityInterface
+     * @param IdentityInterface $identity
+     * @return JwtTokenDto
      */
-    public function codeAuth(string $identifier): ?IdentityInterface;
+    public function getForgotPassToken(IdentityInterface $identity): JwtTokenDto;
+
+    /**
+     * @param string $token
+     * @return JwtTokenDto
+     */
+    public function refreshToken(string $token): JwtTokenDto;
+
+    /**
+     * @param string $token
+     * @param string|null $sub
+     */
+    public function authByToken(string $token, ?string $sub = JwtSubEnum::SUB_BASE_AUTH): JwtObject;
+
+    public function logout(): void;
 
     /**
      * @param IdentityInterface|null $identity
@@ -29,10 +49,7 @@ interface AuthServiceInterface
     public function auth(?IdentityInterface $identity): void;
 
     /**
-     * @param string $type
-     * @param string $identifier
-     * @param ?string $password
-     * @return void
+     * @return IdentityInterface|null
      */
-    public function login(string $type, string $identifier, ?string $password): void;
+    public function getAuth(): ?IdentityInterface;
 }
