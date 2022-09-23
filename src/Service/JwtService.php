@@ -31,9 +31,9 @@ class JwtService implements JwtServiceInterface
      */
     public function __construct()
     {
-        $this->key = env('APP_KEY');
-        $this->accessTokenLifetime = (int)env('ACCESS_TOKEN_LIFETIME_IN_MINUTE', 60);
-        $this->refreshTokenLifetime = (int)env('REFRESH_TOKEN_LIFETIME_IN_MINUTE', 240);
+        $this->key = getenv('APP_KEY') ?: 'pTx2PPZAG/jJtqcet+DTd/2OuPtTt/XNVAfKJa448zc=';
+        $this->accessTokenLifetime = (int)(getenv('ACCESS_TOKEN_LIFETIME_IN_MINUTE') ?: 60);
+        $this->refreshTokenLifetime = (int)(getenv('REFRESH_TOKEN_LIFETIME_IN_MINUTE') ?: 240);
     }
 
     /**
